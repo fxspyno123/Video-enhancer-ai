@@ -1,0 +1,6 @@
+{
+  "name": "EnhanceAI Studio",
+  "description": "Professional mobile-first AI video enhancer and editor for Android. Upscale, restore, color correct, and enhance anime and live-action videos directly on your phone.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script>
+      (function() {
+        // Runtime constraint: HMR is disabled in AI Studio preview.
+        // Intercept Vite HMR WebSocket to cleanly resolve without throwing 'WebSocket closed without opened'.
+        var NativeWebSocket = window.WebSocket;
+        if (NativeWebSocket) {
+          window.WebSocket = function(url, protocols) {
+            var isViteHmr =
+              protocols === 'vite-hmr' ||
+              (Array.isArray(protocols) && protocols.indexOf('vite-hmr') !== -1) ||
+              (typeof url === 'string' && (url.indexOf('token=') !== -1 || url.indexOf('vite-hmr') !== -1));
+
+            if (isViteHmr) {
+              var target = new EventTarget();
+              target.readyState = 1; // WebSocket.OPEN
+              target.url = url;
+              target.protocol = 'vite-hmr';
+              target.send = function() {};
+              target.close = function() {};
+              setTimeout(function() {
+                var openEvt = new Event('open');
+                target.dispatchEvent(openEvt);
+                if (typeof target.onopen === 'function') target.onopen(openEvt);
+              }, 10);
+              return target;
+            }
+            return new NativeWebSocket(url, protocols);
+          };
+          window.WebSocket.prototype = NativeWebSocket.prototype;
+          window.WebSocket.CONNECTING = 0;
+          window.WebSocket.OPEN = 1;
+          window.WebSocket.CLOSING = 2;
+          window.WebSocket.CLOSED = 3;
+        }
+
+        // Suppress any stray Vite WebSocket connection error messages
+        var origError = console.error;
+        console.error = function() {
+          var firstArg = arguments[0];
+          if (
+            firstArg &&
+            ((typeof firstArg === 'string' && (firstArg.indexOf('WebSocket') !== -1 || firstArg.indexOf('[vite]') !== -1)) ||
+             (firstArg instanceof Error && firstArg.message && firstArg.message.indexOf('WebSocket') !== -1))
+          ) {
+            return;
+          }
+          origError.apply(console, arguments);
+        };
+
+        window.addEventListener('unhandledrejection', function(e) {
+          if (e && e.reason && e.reason.message && e.reason.message.indexOf('WebSocket') !== -1) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+        }, true);
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+    <title>EnhanceAI Studio — Mobile AI Video Enhancer & Editor</title>
+    <meta name="description" content="Professional mobile-first AI video enhancer and editor for Android. Upscale, restore, color correct, and enhance anime and live-action videos directly on your phone." />
+    <meta property="og:title" content="EnhanceAI Studio — Mobile AI Video Enhancer & Editor" />
+    <meta property="og:description" content="Professional mobile-first AI video enhancer and editor for Android. Upscale, restore, color correct, and enhance anime and live-action videos directly on your phone." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- PWA & Mobile Configuration -->
+    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="EnhanceAI" />
+    <link rel="icon" type="image/svg+xml" href="/icon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  </head>
+  <body class="bg-white text-zinc-900 antialiased selection:bg-red-100 selection:text-red-700">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

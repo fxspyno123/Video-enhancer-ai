@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="grad-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#F4F4F5" />
+    </linearGradient>
+    <linearGradient id="grad-red" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F04438" />
+      <stop offset="100%" stop-color="#D92D20" />
+    </linearGradient>
+    <linearGradient id="grad-orange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF8A00" />
+      <stop offset="100%" stop-color="#EA580C" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#F04438" flood-opacity="0.25" />
+    </filter>
+  </defs>
+
+  <!-- Background Base with subtle border -->
+  <rect width="512" height="512" rx="112" fill="url(#grad-bg)"/>
+  <rect x="6" y="6" width="500" height="500" rx="106" fill="none" stroke="#E4E4E7" stroke-width="6"/>
+
+  <!-- Outer Dynamic Ring (Red & Orange) -->
+  <circle cx="256" cy="256" r="176" fill="none" stroke="#FEE4E2" stroke-width="20"/>
+  <circle cx="256" cy="256" r="176" fill="none" stroke="url(#grad-red)" stroke-width="20" stroke-dasharray="700 400" stroke-linecap="round"/>
+
+  <!-- Central Camera / Play Octagon -->
+  <g filter="url(#shadow)">
+    <rect x="146" y="146" width="220" height="220" rx="48" fill="url(#grad-red)"/>
+  </g>
+
+  <!-- Play Symbol (White) -->
+  <polygon points="230,205 310,256 230,307" fill="#FFFFFF"/>
+
+  <!-- AI Sparkle Accents (Orange) -->
+  <g transform="translate(340, 110)">
+    <path d="M 30,0 C 30,16.5 43.5,30 60,30 C 43.5,30 30,43.5 30,60 C 30,43.5 16.5,30 0,30 C 16.5,30 30,16.5 30,0 Z" fill="url(#grad-orange)"/>
+  </g>
+  <g transform="translate(110, 340)">
+    <path d="M 20,0 C 20,11 29,20 40,20 C 29,20 20,29 20,40 C 20,29 11,20 0,20 C 11,20 20,11 20,0 Z" fill="url(#grad-orange)"/>
+  </g>
+
+  <!-- Topaz AI Resolution Badge element -->
+  <circle cx="370" cy="370" r="14" fill="url(#grad-orange)"/>
+</svg>

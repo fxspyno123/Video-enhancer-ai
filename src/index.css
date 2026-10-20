@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-white: #ffffff;
+    --color-red-primary: #f04438;
+    --color-red-hover: #d92d20;
+    --color-red-light: #fee4e2;
+    --color-orange-accent: #ff8a00;
+    --color-orange-hover: #ea580c;
+    --color-orange-light: #ffedd5;
+  }
+
+  html, body {
+    background-color: #ffffff;
+    color: #18181b;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Custom range input styling matching 60:30:10 red & orange */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #f4f4f5;
+  height: 6px;
+  border-radius: 9999px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f04438;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(240, 68, 56, 0.4);
+  border: 2px solid #ffffff;
+  transition: transform 0.1s ease, background-color 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.15);
+  background: #ff8a00;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f04438;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(240, 68, 56, 0.4);
+  border: 2px solid #ffffff;
+}
+
+/* Safe area insets for notched mobile displays */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
